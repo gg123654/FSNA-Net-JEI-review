@@ -1,0 +1,206 @@
+{
+  "title_source": "1.md blueprint title retained",
+  "lolv1": {
+    "n": 15,
+    "protocol": "standard psnr/ssim/lpips, no GT-mean alignment",
+    "rf_official": {
+      "psnr": 25.155449009095488,
+      "ssim": 0.860038157304128,
+      "lpips": 0.13137523084878922,
+      "params_m": 1.605701,
+      "source": "results/retinexformer_pretrained_lolv1.json",
+      "latency_ms_128": 15.9
+    },
+    "fsna_phase2": {
+      "psnr": 25.233017452284813,
+      "ssim": 0.8719720284144084,
+      "lpips": 0.12494106243054072,
+      "params_m": 1.695501,
+      "source": "results/phase2_strengthen_lolv1.json"
+    },
+    "ours_fsna_plus_ge": {
+      "psnr": 25.6822,
+      "ssim": 0.8714,
+      "lpips": 0.125,
+      "params_m": 1.7915,
+      "latency_ms_128": 27.8,
+      "source": "results/route_b_probe_gene.json (best iter100; seed=FSNA Phase-2) + code measured latency/params; LPIPS from PATH_A_HONEST_MATRIX.md / independent re-eval"
+    }
+  },
+  "lolv2_syn": {
+    "n": 100,
+    "rf_official": {
+      "psnr": 25.672465671398157,
+      "ssim": 0.9320756661891937,
+      "lpips": 0.05915512829087675,
+      "params_m": 1.605701,
+      "source": "results/retinexformer_pretrained_lolv2_syn.json"
+    },
+    "ours_exposure_head_syn": {
+      "psnr": 25.7672,
+      "ssim": 0.9315,
+      "params_m": 1.6057,
+      "source": "results/route_b_gene_lolv2_syn.json (best iter350)"
+    }
+  },
+  "lolv2_real": {
+    "n": 100,
+    "rf_official": {
+      "psnr": 22.79534124376249,
+      "ssim": 0.8542716121673584,
+      "lpips": 0.17080199517309666,
+      "params_m": 1.605701,
+      "source": "results/retinexformer_pretrained_lolv2_real.json"
+    },
+    "ours_deploy_head_off": {
+      "psnr": 22.79534124376249,
+      "ssim": 0.8542716121673584,
+      "lpips": 0.17080199517309666,
+      "params_m": 1.605701,
+      "source": "results/deploy_domain_adaptive_lolv2-real.json",
+      "note": "Domain-adaptive deploy: fusion hurts on real \u2192 head-off (=RF). Clears min-line 22.5/0.830. Not a fusion gain."
+    },
+    "ours_exposure_head_real": {
+      "psnr": 22.7953,
+      "ssim": 0.8543,
+      "params_m": 1.6057,
+      "source": "results/route_b_gene_lolv2_real.json (best iter0, ties RF)"
+    },
+    "fsna_fusion_real": {
+      "psnr": 22.001303230388615,
+      "ssim": 0.8486448299884796,
+      "lpips": 0.17683074310421942,
+      "source": "results/phase2_strengthen_lolv2-real.json (fusion head regresses; limitation)"
+    }
+  },
+  "cross": {
+    "lolv1_train_to_lolv2-syn_test": {
+      "psnr": 16.214270126782406,
+      "ssim": 0.7778753048181534,
+      "source": "results/cross_phase2_lolv1_to_lolv2-syn.json",
+      "note": "Stage-1 FSNA (before GE; route_a_fsna_rf). Honest LOL-family transfer number; do not label as full FSNA-Net+GE."
+    },
+    "lolv1_train_to_lolv2-real_test": {
+      "psnr": 29.134237508967267,
+      "ssim": 0.9110043114423751,
+      "source": "results/cross_phase2_lolv1_to_lolv2-real.json",
+      "note": "ARTIFACT: all 100 Normal GTs fall in 43 duplicate-hash groups (see cross_real_artifact_diagnosis.json). RF-v1 alone ~28.98; exceeds on-domain RF 22.80. Do NOT claim as cross-domain win. Prefer SID/SDSD once placed under datasets/SID_RGB."
+    }
+  },
+  "noref": {
+    "source": "results/noref_phase2.json",
+    "DICM": {
+      "niqe": 3.954,
+      "brisque": 27.354
+    },
+    "LIME": {
+      "niqe": 4.384,
+      "brisque": 23.526
+    },
+    "MEF": {
+      "niqe": 4.054,
+      "brisque": 26.699
+    },
+    "NPE": {
+      "niqe": 4.294,
+      "brisque": 17.226
+    },
+    "VV": {
+      "niqe": 3.24,
+      "brisque": 24.54
+    }
+  },
+  "ablation_lolv1": {
+    "source": "results/ablation_phase2_lolv1.json",
+    "A0_backbone": [
+      25.1554,
+      0.86
+    ],
+    "A1_fused": [
+      25.2241,
+      0.8711
+    ],
+    "A2_full": [
+      25.233,
+      0.872
+    ],
+    "A3_no_delta": [
+      25.2241,
+      0.8711
+    ],
+    "A4_r_fre": [
+      25.1024,
+      0.8612
+    ],
+    "A5_base_plus_delta": [
+      25.1643,
+      0.8603
+    ]
+  },
+  "baselines_literature_lolv1": {
+    "RetinexNet": [
+      16.77,
+      0.462
+    ],
+    "KinD": [
+      20.87,
+      0.8
+    ],
+    "Zero-DCE++": [
+      14.86,
+      0.559
+    ],
+    "SCI": [
+      14.78,
+      0.525
+    ],
+    "SNR-Net": [
+      24.61,
+      0.842
+    ],
+    "Restormer": [
+      22.43,
+      0.823
+    ],
+    "LLFormer": [
+      23.65,
+      0.816
+    ],
+    "CIDNet": [
+      23.81,
+      0.857
+    ],
+    "RetinexFormer": [
+      25.16,
+      0.845
+    ]
+  },
+  "baselines_measured_local_lolv1": {
+    "SCI_medium": {
+      "psnr": 14.853,
+      "ssim": 0.5566,
+      "source": "results/baselines_official_measured_lolv1.json"
+    },
+    "Zero-DCE++": {
+      "psnr": 15.068,
+      "ssim": 0.5958,
+      "source": "results/baselines_official_measured_lolv1.json"
+    },
+    "RetinexFormer": {
+      "psnr": 25.155,
+      "ssim": 0.86,
+      "source": "results/retinexformer_pretrained_lolv1.json"
+    },
+    "FSNA_Phase2": {
+      "psnr": 25.233,
+      "ssim": 0.872,
+      "source": "results/eval_phase2_locked_lolv1.json"
+    },
+    "FSNA_GE": {
+      "psnr": 25.682,
+      "ssim": 0.8714,
+      "source": "results/route_b_probe_gene_fsna.json"
+    }
+  },
+  "latency_protocol": "CUDA Event median, 128x128, RTX 4090, warmup30 run100"
+}
